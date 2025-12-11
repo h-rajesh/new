@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-type Role =  "SCHOOLADMIN";
+type Role = "SCHOOLADMIN";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -11,6 +11,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState<Role>("SCHOOLADMIN");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -33,64 +34,89 @@ export default function SignupPage() {
       return;
     }
 
-    // Redirect to login after successful signup
     router.push("/admin/school");
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-green-50">
       <form
         onSubmit={handleSignup}
-        className="bg-white shadow-md p-8 rounded-lg w-96"
+        className="bg-white shadow-xl p-10 rounded-2xl w-96 relative overflow-hidden"
       >
-        <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center text-green-700">
+          Sign Up
+        </h2>
 
         {error && (
-          <p className="text-red-600 mb-4 text-center">{error}</p>
+          <p className="text-red-600 mb-4 text-center animate-pulse">{error}</p>
         )}
 
-        <input
-          type="text"
-          placeholder="Full Name"
-          className="w-full border p-2 rounded mb-4"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
+        {/* Name Input */}
+        <div className="mb-4 relative">
+          <input
+            type="text"
+            placeholder="Full Name"
+            className="w-full border border-green-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
 
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full border p-2 rounded mb-4"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        {/* Email Input */}
+        <div className="mb-4 relative">
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full border border-green-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full border p-2 rounded mb-4"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        {/* Password Input */}
+        <div className="mb-4 relative">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            className="w-full border border-green-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 transition pr-12"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-3 text-green-500 font-semibold"
+          >
+            {showPassword ? "Hide" : "Show"}
+          </button>
+        </div>
 
-        <select
-          value={role}
-          onChange={(e) => setRole(e.target.value as Role)}
-          className="w-full border p-2 rounded mb-4"
-        >
-          <option value="SCHOOLADMIN">SCHOOLADMIN</option>
-        </select>
+        {/* Role Select */}
+        <div className="mb-6 relative">
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value as Role)}
+            className="w-full border border-green-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-400 transition"
+          >
+            <option value="SCHOOLADMIN">SCHOOLADMIN</option>
+          </select>
+        </div>
 
+        {/* Submit Button */}
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+          className="w-full bg-green-600 text-white py-3 rounded-xl font-semibold shadow-md hover:bg-green-700 transition transform hover:scale-105"
         >
           {loading ? "Signing up..." : "Sign Up"}
         </button>
+
+        {/* Decorative Circles */}
+        <div className="absolute -top-10 -right-10 w-32 h-32 bg-green-200 rounded-full opacity-30 animate-pulse"></div>
+        <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-green-300 rounded-full opacity-20 animate-pulse"></div>
       </form>
     </div>
   );
