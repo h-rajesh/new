@@ -5,11 +5,10 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
-  output = "../app/generated/prisma"
+  output          = "../app/generated/prisma"
 }
-
 
 datasource db {
   provider = "postgresql"
@@ -23,27 +22,27 @@ enum Role {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  name      String?
-  email     String?  @unique
-  password  String?  // hashed
+  id       String  @id @default(cuid())
+  name     String?
+  email    String? @unique
+  password String? // hashed
 
-  role      Role
+  role Role
 
   // Tenant (School)
-  schoolId  String?
-  school    School?   @relation(fields: [schoolId], references: [id])
+  schoolId String?
+  school   School? @relation(fields: [schoolId], references: [id])
 
   // Teacher-specific fields
-  mobile    String?   // teacher mobile
+  mobile          String? // teacher mobile
   assignedClasses Class[] @relation("TeacherClass")
 
   // Student-specific fields
-  student   Student?
+  student Student?
 
   // NextAuth
-  accounts   Account[]
-  sessions   Session[]
+  accounts Account[]
+  sessions Session[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -54,51 +53,53 @@ model User {
 }
 
 model School {
-  id          String   @id @default(cuid())
-  name        String
+  id       String @id @default(cuid())
+  name     String
+  address  String
+  location String
 
-  admins      User[]   @relation("SchoolAdmin")
-  teachers    User[]   @relation("SchoolTeacher")
-  students    Student[]
-  classes     Class[]
+  admins   User[]    @relation("SchoolAdmin")
+  teachers User[]    @relation("SchoolTeacher")
+  students Student[]
+  classes  Class[]
 
-  createdAt   DateTime @default(now())
+  createdAt DateTime @default(now())
 
   users User[]
 }
 
 model Class {
-  id        String   @id @default(cuid())
-  name      String
-  section   String?
-  schoolId  String
-  school    School   @relation(fields: [schoolId], references: [id])
+  id       String  @id @default(cuid())
+  name     String
+  section  String?
+  schoolId String
+  school   School  @relation(fields: [schoolId], references: [id])
 
   // Teacher who handles this class
   teacherId String?
-  teacher   User?     @relation("TeacherClass", fields: [teacherId], references: [id])
+  teacher   User?   @relation("TeacherClass", fields: [teacherId], references: [id])
 
-  students  Student[]
+  students Student[]
 
   createdAt DateTime @default(now())
 }
 
 model Student {
-  id         String   @id @default(cuid())
-  userId     String   @unique
-  user       User     @relation(fields: [userId], references: [id])
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
 
-  schoolId   String
-  school     School   @relation(fields: [schoolId], references: [id])
+  schoolId String
+  school   School @relation(fields: [schoolId], references: [id])
 
-  classId    String?
-  class      Class?   @relation(fields: [classId], references: [id])
+  classId String?
+  class   Class?  @relation(fields: [classId], references: [id])
 
-  rollNo     String?
-  dob        DateTime?
-  address    String?
+  rollNo  String?
+  dob     DateTime?
+  address String?
 
-  createdAt  DateTime @default(now())
+  createdAt DateTime @default(now())
 }
 
 // =====================
@@ -112,12 +113,12 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String?  @db.Text
-  access_token      String?  @db.Text
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
   expires_at        Int?
   token_type        String?
-  scope             String?  @db.Text
-  id_token          String?  @db.Text
+  scope             String? @db.Text
+  id_token          String? @db.Text
   session_state     String?
 
   createdAt DateTime @default(now())
