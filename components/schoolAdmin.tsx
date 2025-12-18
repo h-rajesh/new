@@ -27,7 +27,18 @@ export default function Home() {
               Teachers
             </div>
           </Link>
+          <Link href="/school" className="block">
+            <div className="w-full py-4 rounded-2xl bg-green-400 text-white text-lg font-semibold text-center hover:bg-green-500 transition shadow-md">
+              School Details
+            </div>
+          </Link>
+          <Link href="/tc" className="block">
+            <div className="w-full py-4 rounded-2xl bg-green-400 text-white text-lg font-semibold text-center hover:bg-green-500 transition shadow-md">
+              TC Requests & Approvals
+            </div>
+          </Link>
         </div>
+        
 
         <p className="text-sm text-gray-500 text-center mt-8">
           Select a module to continue

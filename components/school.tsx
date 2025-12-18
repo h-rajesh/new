@@ -64,7 +64,7 @@ export default function SchoolPage() {
         <div className="min-h-screen bg-white">
             {/* Navbar */}
             <nav className="bg-green-600 text-white p-4 flex justify-between items-center shadow-md">
-                <h1 className="text-xl font-bold">School Dashboard</h1>
+                <h1 className="text-xl font-bold">School Details Update</h1>
                 <button
                     onClick={() => setShowForm(!showForm)}
                     className="bg-white text-green-600 px-4 py-2 rounded hover:bg-green-100 transition"
